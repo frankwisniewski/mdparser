@@ -1,4 +1,6 @@
 # mdparser
 small markdown Parser
 
-simple use `fhwMD( markDownRaw )`
+simple use `fhwMD( md, { autoid:true, mathjax:true } )`
+
+
