@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <link rel="stylesheet" href="./mini.css">
+  <script src="mdparsershortmin.js"></script>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['-$', '$-'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+
+  <script id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+  </script>
+</head>
+<body>
+<div class=container id="markdownContainer"></div>
+<script>
+"use strict";
+async function loadMD(fileName){
+  try {
+    const req = await fetch( fileName , {
+      method: 'get',
+      headers: {
+        'content-type': 'text/csv;charset=UTF-8'
+      }
+    });
+    if (req.status === 200){
+      let markDown = await req.text()
+      return markDown
+    }
+  } catch (err) {console.log(err)}
+}
+function process(md){
+  let mdToHtm = fhwMD( md, {autoid:true, mathjax:true} )
+  markdownContainer.innerHTML=mdToHtm; 
+}
+loadMD("beschreibung.md").then( (markdown) => process(markdown))
+
+</script>
+</body>
+</html>
